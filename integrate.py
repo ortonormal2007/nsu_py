@@ -66,33 +66,6 @@ def intf_simp(a, b, n):
     return h * res / 6
 
 
-def num_rect(a, b, n):
-    h = (b - a) / n
-    # x = linspace(a + h / 2, a + h / 2 + h * (n - 1), n)
-    x = linspace(a + h * 0.5, a + h * (n - 0.5), n)
-    fun = f(x) * h
-    res = fun.sum()
-    return res
-
-
-def num_trap(a, b, n):
-    h = (b - a) / n
-    # x = linspace(a + h, a + h + h * (n - 2), n - 1)
-    x = linspace(a + h, a + h * (n - 1), n - 1)
-    res = (f(a) + f(b)) * 0.5 + f(x).sum()
-    return h * res
-
-
-def num_simp(a, b, n):
-    h = (b - a) / n
-    # x1 = linspace(a + h / 2, a + h / 2 + h * (n - 1), n)
-    # x2 = linspace(a + h, a + h + h * (n - 2), n - 1)
-    x1 = linspace(a + h * 0.5, a + h * (n - 0.5), n)
-    x2 = linspace(a + h, a + h * (n - 1), n - 1)
-    res = f(a) + f(b) + 4 * f(x1).sum() + 2 * f(x2).sum()
-    return h * res / 6
-
-
 if __name__ == '__main__':
     true_res = exp(1) - 1
 
@@ -106,9 +79,9 @@ if __name__ == '__main__':
         (plt(intf_rect, true_res), 'rect py'),
         (plt(intf_trap, true_res), 'trap py'),
         (plt(intf_simp, true_res), 'simp py'),
-        (plt(num_rect, true_res), 'rect numpy'),
-        (plt(num_trap, true_res), 'trap numpy'),
-        (plt(num_simp, true_res), 'simp numpy')
+        (plt(ign.num_rect, true_res), 'rect numpy'),
+        (plt(ign.num_trap, true_res), 'trap numpy'),
+        (plt(ign.num_simp, true_res), 'simp numpy')
     )
 
     for coords, lab in plt_data:

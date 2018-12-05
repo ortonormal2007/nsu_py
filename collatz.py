@@ -3,9 +3,6 @@ from time import perf_counter as pc
 from matplotlib.pyplot import plot, legend, xlabel, ylabel, show
 
 
-
-
-
 def my_time(func, *args):
     arr = []
     for i in range(3):
@@ -65,3 +62,4 @@ def test():
 if __name__ == '__main__':
     test()
     print('Git test!')
+    collatz_jit.inspect_types()
