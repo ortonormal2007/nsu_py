@@ -1,5 +1,17 @@
+import numpy as np
+from scipy.integrate import odeint
 from matplotlib.pyplot import (plot, legend, show, xscale,
                                yscale, xlabel, ylabel, title)
+from time import perf_counter as pc
+
+def my_time(func, *args):
+    t1 = pc()
+    res = func(args)
+    t2 = pc()
+    
+
+def ans(t):
+    100 * exp(t)
 
 
 def f(y, x):
@@ -23,9 +35,18 @@ def euler(xinit, tinit, tfinal, step, right):
         y.append(x_cur)
         t_cur = step * n
         n += 1
-    print(x, y)
-    plot(x, y)
-    show()
+    return (x, y)
 
 
-euler(100, 0, 20, 1, f)
+for n in range(2, 17):
+    x, y = euler(100, 0, 20, 20 / 2 ** n, f)
+    t = np.linspace(0, 20, 2 ** n)
+    u = odeint(f, 100, t)
+
+
+t = np.linspace(0, 20)
+x, y = euler(100, 0, 20, 1, f)
+u = odeint(f, 100, t)
+plot(x, y, 'r-')
+plot(t, u)
+show()
