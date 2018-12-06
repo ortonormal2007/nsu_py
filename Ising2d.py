@@ -10,7 +10,11 @@ class Ising(object):
         self.states = [[1 for i in range(n)] for j in range(n)]
         self.p_up = [[1 for i in range(n)] for j in range(n)]
 
+
     def set(self, T):
+        p = []
+        for s in range(-4, 5):
+            p.append(exp(s/T) / (exp(s/T) + exp(-s/T)))
         for i in range(self.n):
             for j in range(self.n):
                 i_next = i + 1
@@ -25,7 +29,7 @@ class Ising(object):
                                          self.states[i_prev][j] +
                                          self.states[i][j_next] +
                                          self.states[i][j_prev])
-                self.p_up[i][j] = exp(S/T) / (exp(S/T) + exp(-S/T))
+                self.p_up[i][j] = p[s + 4]
 
     def sweep(self):
         for i in range(self.n):
@@ -40,17 +44,15 @@ class Ising(object):
 
 
 def test():
-    lat = Ising(10000)
+    lat = Ising(100)
     magn = []
     for t in range(1, 300):
         lat.set(t)
         lat.sweep()
-        print(lat.M())
-        # magn.append(lat.M())
-    # plot(magn)
-    # show()
+        magn.append(lat.M())
+    plot(magn)
+    show()
 
 
 if __name__ == '__main__':
-    # test()
-    print(timeit('test', number=100000, globals=globals()))
+    test()
